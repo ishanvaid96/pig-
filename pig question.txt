@@ -1,0 +1,46 @@
+
+filter
+filter data by year == 2;
+
+order
+order data by name desc;
+
+
+group
+group data by field;
+
+cogroup
+
+	emp(id,dept,income)						dept(did,name)
+				
+						
+(1,1,1222)									(1,marketing)
+(2,1,1321)									(2,development)
+(3,2,1543)									(3,sales)
+(4,3,4000)										
+(5,2,4211)
+
+
+cogroup emp by dept,dept by did;
+
+
+foreach with outer bag
+	
+	x = load ' ' using ---  as (x1:int,x2:int,x3:int);
+	out=foreach x generate x1,x2,x2+x3 as f1:int
+	dump out;
+	
+	
+	With grouped relation
+		data= load ' ' using ---  as (x1:int,x2:int,x3:int);
+	y=group data by x1;
+	z= foreach y generate group , data.x1,data.x2;
+	
+	
+Union 
+
+	c = union a,b;
+
+split
+
+	split c into d IF $0 == 0, e IF $1 == 2;
